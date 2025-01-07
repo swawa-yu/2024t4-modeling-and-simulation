@@ -4,9 +4,10 @@
 
 #let paper(
   body,
+  paper-num: 2,
   title: "{タイトル}",
-  cource: "{講義名}",
-  term: "{開講時期}",
+  cource: "モデリングとシミュレーション",
+  term: "2024年度4ターム",
   date-due: "{提出期限}",
   date-submit: (datetime.today().year(), datetime.today().month(), datetime.today().day()),
   author-name: "長田 麗生",
@@ -32,22 +33,23 @@
   show heading: set block(above: 1.8em, below: 1em)
   set page(numbering: "1 / 1")
 
+  show link: underline
+  show link: set text(fill: rgb("#125ee0"))
+
   show: thmrules.with()
 
-  // [提出日: ];date-submit
-  
-  // [
-  //       #v(40pt)
-  //   #text(
-  //     size: 16pt,
-  //   )[
-  //     #date.at(0) 年 #date.at(1) 月 #date.at(2) 日 提出
-  //   ]]
-  // title
-  // [title]
-  [
-    #term「#cource」\
-    #title\
+  align(center,[
+    #text(size: 16pt)[
+      #term「#cource」\
+    ]
+
+    #text(size: 16pt)[
+      レポートその#paper-num
+    ]
+
+    #text(size: 20pt)[
+      #title
+    ]
 
     #author-department\
     #author-id #author-name
@@ -56,7 +58,7 @@
     提出日：#date-submit.at(0)年#date-submit.at(1)月#date-submit.at(2)日
 
     担当教員：#teacher 先生
-  ]
+  ])
   body
 }
 
