@@ -8,12 +8,19 @@
 
   set page(paper: "a4", margin: 12%)
   set par(leading: 0.55em, first-line-indent: 0em, justify: true)
-  set text(font: "Hiragino Mincho ProN", size:12pt)
+  set text(
+    font:(
+      // "Times New Roman",
+      "Hiragino Mincho ProN"
+    ),
+    size:12pt
+  )
   set heading(numbering: "1.")
   show heading: set block(above: 1.8em, below: 1em)
 
   show: thmrules.with()
 
+  []
   body
 }
 
