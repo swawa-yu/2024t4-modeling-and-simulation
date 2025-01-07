@@ -1,36 +1,6 @@
-// #import "./template.typ": *
+#import "../template.typ": *
 
-#set page(paper: "a4", margin: 12%)
-#set par(leading: 0.55em, first-line-indent: 0em, justify: true)
-#set text(font: "Hiragino Mincho ProN", size:12pt)
-#set heading(numbering: "1.")
-#show heading: set block(above: 1.8em, below: 1em)
-
-#import "@preview/physica:0.9.4": *
-#import "@preview/ctheorems:1.1.3": *
-
-#show: thmrules.with()
-
-// #let problem(title:"") = thmbox("問題", title, fill: rgb("#f0f0f0")).with(numbering:none)
-#let definition = thmbox(
-  "definition",
-  "定義",
-  stroke: rgb("#000000") + 1pt
-)
-
-#let problem = thmbox(
-  "problem",
-  "問題",
-  stroke: rgb("#000000") + 1pt,
-)
-
-#let theorem = thmbox(
-  "theorem",
-  "定理",
-  fill: rgb("#eeeeee")
-)
-
-#let proof = thmproof("proof", "証明")
+#show: paper.with()
 
 #let tr(matrix) = $matrix^⊤$
 #let inner(v1, v2) = $angle.l v1, v2 angle.r$
