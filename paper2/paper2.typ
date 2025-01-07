@@ -1,6 +1,11 @@
 #import "../template.typ": *
 
-#show: paper.with()
+#show: paper.with(
+  cource: "モデリングとシミュレーション",
+  title: "レポート2 「ベクトルについて」",
+  date-due: "2025年1月8日",
+  term: "2024年度4ターム"
+)
 
 #let tr(matrix) = $matrix^⊤$
 #let inner(v1, v2) = $angle.l v1, v2 angle.r$
