@@ -1,4 +1,5 @@
 #import "../template.typ": *
+#import "@preview/cetz:0.3.1"
 
 #show: paper.with(
   cource: "モデリングとシミュレーション",
@@ -287,16 +288,64 @@ $
   $
   よって $||xx+yy|| <= ||xx||+||yy||$
 
-  図形的には次のように説明できる。
+  図形的には次のように説明できる。下のように三角形を書くと、この不等式は「2辺の長さの和 $||x||+||y||$ は、残りの1辺の長さ $||xx+yy||$ より大きい」ことを意味していると言える。
+  #align(center,
+    cetz.canvas(
+      length: 3cm, {
+        import cetz.draw: *
+
+        set-style(
+          mark: (fill: black, scale: 1),
+          stroke: (thickness: 0.4pt, cap: "round"),
+          angle: (
+            radius: 0.3,
+            label-radius: .22,
+            fill: green.lighten(80%),
+            stroke: (paint: green.darken(50%))
+          ),
+          content: (padding: 5pt)
+        )
+
+        set-style(stroke: (thickness: 1.2pt))
+
+        // circle((-1,0), radius: 0.1)
+        // circle((0.5,1), radius: 0.1)
+        // circle((2,0.5), radius: 0.1)
+
+        line((-1, 0), (0.5, 1), name: "y", mark: (end: "stealth"))
+        content("y.mid", $ yy $, anchor: "south")
+
+        line((0.5, 1), (2, 0.5), name: "x", mark: (end: "stealth"))
+        content("x.mid", $ xx $, anchor: "south")
+
+        line((-1, 0), (2, 0.5), name: "z", mark: (end: "stealth"))
+        content("z.mid", $ xx+yy $, anchor: "north")
+      }
+    )
+  )
 ]
 
 #problem[
-  以下について示せ。(逆三角不等式)
+  以下について示せ。
   $
     abs(||xx|| - ||yy||) <= ||xx+yy||
   $
 ]
-この不等式は辺の長さ(右辺)を、他の2つの辺を用いて下から評価する形となっており、上から評価する三角不等式に対して逆三角不等式と呼ばれることがある。
+#proof[
+  与えられた不等式は次のように同値変形できる。
+  $
+        & abs(||xx|| - ||yy||) <= ||xx+yy||\
+    <=> & ||xx|| - ||yy|| <= ||xx+yy|| #h(1em) and  #h(1em) ||yy|| - ||xx|| <= ||xx+yy||\
+    <=> & ||xx|| <= ||xx+yy|| + ||yy|| #h(1em) and  #h(1em) ||yy|| <= ||xx+yy|| + ||xx|| 
+  $
+  最後の式のうち左側は「$xx$ の長さは、他の2辺 $yy, xx+yy$ の長さの和より小さい」ことを表している。このことに注目すると、三角不等式を次のように利用すればよいことがわかる。
+  $
+    ||xx|| &= ||(xx+yy) + (-yy)||\
+           &<=||xx+yy|| + ||-yy|| #h(2em) "(三角不等式より)"\
+           &= ||xx+yy|| + ||yy||\
+  $
+  これで最後の式のうち左側を示せた。右側についても同様に示せるので、与えられた不等式を証明できた。
+]
 
 
 = 実習の記録
