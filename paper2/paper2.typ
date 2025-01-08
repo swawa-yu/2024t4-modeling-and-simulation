@@ -1,4 +1,4 @@
-#import "../template.typ": *
+#import "./template.typ": *
 #import "@preview/cetz:0.3.1"
 
 #show: paper.with(
@@ -209,7 +209,7 @@ $
   $
     ||xx-yy||^2 = ||xx||^2 + ||yy||^2 - 2||xx||||yy|| cos theta
   $
-]
+]<yogen>
 #proof[
   (線型代数の本題から遠いため省略。幾何的に証明できる。)
 ]
@@ -354,10 +354,240 @@ $
 
 = 実習の記録
 == 実習(1), (2) Scilabでベクトルの表示
+#figure(caption: [ベクトルのプロット])[
+  #sourcecode[```scilab
+    mode(0);
+
+    // ベクトル
+    x = [sqrt(3);
+        1];
+
+    // 要素
+    x1 = x(1);
+    x2 = x(2);
+
+    // プロットするために，以下を定義．
+    ox1 = [0,x1];
+    ox2 = [0,x2];
+
+    // プロット
+    scf(1);
+    plot(ox1,ox2,'b-');
+    //plot(x1,x2,'b-x');
+
+    isoview;
+  ```
+]]<lst:1>
+
+`'b-'` は「青色(blue)の実線」を意味する。@lst:1 の実行結果が @fig:1 である。また、18行目のコメントアウトを外して実行した結果が @fig:2 である。コメントアウトを外すと座標 `(x_1, x_2)` にバツ印が描画される。
+
+#grid(columns:2, 
+  [#figure(image("./fig/1.png"), caption:[ベクトルのプロット(バツ印なし)])<fig:1>],
+  [#figure(image("./fig/2.png"), caption:[ベクトルのプロット(バツ印あり)])<fig:2>]
+)
+
+
+実習2では複数のベクトルをプロットした。@lst:3 がプログラムでその実行結果が @fig:4 である。ベクトルのプロットを簡潔に記述するために、ベクトル `p` と色 `c` を指定できる関数 `plotvec(p, c)` を定義している。
+#figure(caption: [2つのベクトルのプロット(30°, 60°)])[
+  #sourcecode[```scilab
+    mode(0);
+
+    function [] = plotvec(p, c)
+        plot([0, p(1)], [0, p(2)], c+'-');
+        plot(p(1), p(2), c+'x');
+    endfunction
+
+    // 一つ目のベクトル
+    x = [sqrt(3);
+        1];
+
+    // 二つ目のベクトル
+    y = [1;
+        sqrt(3)];
+
+    // プロット
+    scf(1);
+
+    plotvec(x, 'b');
+    plotvec(y, 'g');
+
+    a = gca();
+    a.isoview = 'on';
+  ```
+]]<lst:3>
+
+さらに授業内で「大きさが3, 角度が45°, 135° のベクトルをプロットせよ」という課題が与えられた。@lst:4 がプログラム、@fig:5 が実行結果である。
+#grid(columns:2, 
+  [#figure(image("./fig/4.png"), caption:[2つのベクトルのプロット(30°, 60°)])<fig:4>],
+  [#figure(image("./fig/5.png"), caption:[2つのベクトルのプロット(45°, 135°)])<fig:5>]
+)
+
+
+#figure(caption: [大きさが3, 角度が45°, 135° のベクトルプロット])[
+  #sourcecode[```scilab
+    mode(0);
+    // プロット
+    scf(1);
+
+    function [] = plotvec(p, c)
+        plot([0, p(1)], [0, p(2)], c+'-');
+        plot(p(1), p(2), c+'x');
+    endfunction
+
+    // 大きさが3, 角度が45度、135度のベクトル
+    u = 3*[cos(1/4 * %pi);
+          sin(1/4 * %pi)];
+    v = 3*[cos(3/4 * %pi);
+          sin(3/4 * %pi)];
+    //plotvec(u, 'r');
+    //plotvec(v, 'b');
+
+    a = gca();
+    a.isoview = 'on';
+  ```
+]]<lst:4>
+
+
 
 == 実習(3) Scilabでベクトルの内積を計算する
+内積の定義から、forループにより内積が計算できる。また、Scilabではベクトルの内積を行列の積として計算することができる。つまり必要に応じて転置を利用すれば次のように完結に記述することができる。
+列ベクトル `x`, `y` に対してその内積は `x' * y` で書ける。
+
+#figure(caption: [ベクトルの内積、距離の計算])[
+  #sourcecode[```scilab
+    mode(0);
+
+    n = 2;
+    x = rand(n,1,'normal');
+    y = rand(n,1,'normal');
+
+    // for 文で計算
+    xy = 0;
+    for k = 1:n,
+      xy = xy + x(k)*y(k);
+    end
+    xy
+
+    // Scilab の積で計算
+    xy_ = x'*y
+
+    //--------------------------------------
+    // 距離の計算
+    //--------------------------------------
+    // for 文で計算
+    xx = 0;
+    for k = 1:n,
+      xx = xx + x(k)*x(k);
+    end
+    xx
+
+    // Scilab の積で計算
+    xx_ = x'*x
+
+    // y でも行ってみよう.
+    // for 文で計算
+    yy = 0;
+    for k = 1:n,
+      yy = yy + y(k)*y(k);
+    end
+    yy
+
+    // Scilab の積で計算
+    yy_ = y'*y
+  ```
+]]<lst:5>
+
+#figure(caption: [@lst:5 の実行結果])[
+  #sourcecode[```scilab
+    xy = 
+      1.4891584
+    xy_ = 
+      1.4891584
+    xx = 
+      0.9327533
+    xx_ = 
+      0.9327533
+    yy = 
+      4.2363762
+    yy_ = 
+      4.2363762
+  ```
+]]<lst:6>
 
 == 実習(4) 角度について
+余弦定理(@yogen)
+$
+  ||xx-yy||^2 = ||xx||^2 + ||yy||^2 - 2||xx||||yy|| cos theta
+$
+を用いることで、2つのベクトルがなす角を計算することができる。具体的には、左辺は
+$
+  ||xx||^2 + ||yy||^2 - 2tr(xx)yy
+$
+と内積で表現できるから、余弦定理を次のように書き直すことができる。
+$
+  tr(xx)yy = ||xx||||yy||cos theta
+$
+よって、
+$
+  cos theta &= (tr(xx)yy)/(||xx||||yy||)\
+  sin theta &= sqrt(1 - ((tr(xx)yy)/(||xx||||yy||))^2)\
+  tan theta &= (sin theta) / (cos theta)\
+  theta     &= arctan (tr(xx)yy)/(||xx||||yy||)\
+$
+これをもとに$cos theta, sin theta, tan theta, theta$ を求めるプログラムが @lst:7 である。
+
+#figure(caption: [角度を求めるプログラム])[
+  #sourcecode[```scilab
+    mode(0);
+
+    x = [sqrt(3);
+        1];
+
+    y = [1;
+        sqrt(3)];
+
+    //--------------------------------------
+    // 内積の計算
+    //--------------------------------------
+    xy = x'*y
+    xx = x'*x
+    yy = y'*y
+
+    //--------------------------------------
+    // cos と sin を計算(プラスだけ取る)
+    //--------------------------------------
+    cosTheta = xy/(sqrt(xx)*sqrt(yy))
+    sinTheta = sqrt(1 - cosTheta^2)
+
+    // tan から，角度を計算(プラスだけ取る)
+    tanTheta = sinTheta/cosTheta
+    theata_rad = atan(tanTheta)
+    theata_deg = (180/%pi)*theata_rad
+  ```
+]]<lst:7>
+
+#figure(caption: [@lst:7 の実行結果])[
+  #sourcecode[```
+    xy = 
+      3.4641016
+    xx = 
+      4.0000000
+    yy = 
+      4.0000000
+    cosTheta = 
+      0.8660254
+    sinTheta = 
+      0.5000000
+    tanTheta = 
+      0.5773503
+    theata_rad = 
+      0.5235988
+    theata_deg = 
+      30.000000
+```
+]]<lst:8>
+
+
 
 == 実習(5) 定理の確認
 2次元の正規分布の乱数を使って、以下を確かめなさい。
@@ -365,6 +595,121 @@ $
 (1) コーシー・シュワルツの不等式\
 (2) 三角不等式
 
+それぞれ、乱数で生成したベクトルに対して複数回計算してその結果を表示し、おかしければ報告するプログラムを動作させた。
+#figure(caption: [コーシー・シュワルツの不等式が成り立っていることの確認])[
+  #sourcecode[```
+    //--------------------------------------
+    // コーシーシュワルツの不等式を確かめる．
+    //--------------------------------------
+    mode(0);
+
+    for k = 1:10,
+      // 乱数でベクトルを発生
+      x = rand(2,1,'normal');
+      y = rand(2,1,'normal');
+
+      // ||x||||y||の計算
+      xx = x'*x;
+      x_ = sqrt(xx);
+
+      yy = y'*y;
+      y_ = sqrt(yy);
+
+      xy_ = x_*y_;
+
+      // <x,y> の計算
+      xy = abs(x'*y);
+
+      xy_xy = xy_ - xy
+      if (xy_xy < 0),
+          disp('Cauthy Schwarz うそつき！');
+      end
+
+    end
+
+    disp('finished!');
+```
+]]<lst:8>
+#figure(caption: [@lst:7 の実行結果])[
+  #sourcecode[```
+    xy_xy = 
+      0.0340170
+    xy_xy = 
+      0.1819252
+    xy_xy = 
+      0.1448247
+    xy_xy = 
+      1.4660353
+    xy_xy = 
+      1.4258971
+    xy_xy = 
+      0.3140829
+    xy_xy = 
+      1.6179960
+    xy_xy = 
+      0.4472560
+    xy_xy = 
+      0.1325598
+    xy_xy = 
+      1.0374417
+      "finished!"
+```
+]]<lst:8>
+
+#figure(caption: [三角不等式が成り立っていることの確認])[
+  #sourcecode[```
+  //--------------------------------------
+  // 三角不等式を確かめる．
+  //--------------------------------------
+  mode(0);
+
+  for k = 1:10,
+    // 乱数でベクトルを発生
+    x = rand(2,1,'normal');
+    y = rand(2,1,'normal');
+
+    // a = ||x|| + ||y|| - ||x+y|| >=0 を確かめる
+    a = sqrt(x'*x) + sqrt(y'*y) - sqrt((x+y)'*(x+y))
+    if (a < 0),
+        disp('Cauthy Schwarz うそつき！');
+    end
+
+  end
+
+  disp('finished!');
+```
+]]<lst:9>
+#figure(caption: [@lst:7 の実行結果])[
+  #sourcecode[```
+    a = 
+      0.0725710
+    a = 
+      1.4519680
+    a = 
+      0.4522284
+    a = 
+      1.7176327
+    a = 
+      2.3055133
+    a = 
+      0.1755186
+    a = 
+      0.0207109
+    a = 
+      0.3444386
+    a = 
+      0.0010523
+    a = 
+      1.0584938
+      "finished!"
+```
+]]<lst:10>
+
+= まとめ
+- ベクトルの内積や距離の性質について学習した
+- 距離を測るのに線型代数が役に立つ
+- ベクトルの内積を計算することで、距離がわかる
+- 具体的な計算は計算機にさせればよい
 
 
 = 参考文献

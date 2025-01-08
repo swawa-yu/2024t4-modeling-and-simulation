@@ -1,6 +1,7 @@
 
 #import "@preview/physica:0.9.4": *
 #import "@preview/ctheorems:1.1.3": *
+#import "@preview/codelst:2.0.2": sourcecode
 
 #let paper(
   body,
@@ -17,9 +18,6 @@
 
   date: (datetime.today().year(), datetime.today().month(), datetime.today().day()),
 ) = {
-  import "@preview/physica:0.9.4": *
-  import "@preview/ctheorems:1.1.3": *
-
   set page(paper: "a4", margin: 12%)
   set par(leading: 0.55em, first-line-indent: 0em, justify: true)
   set text(
@@ -35,6 +33,38 @@
 
   show link: underline
   show link: set text(fill: rgb("#125ee0"))
+
+  //図のラベルを置き換える
+  show figure.where(kind:image): set figure(supplement: "図")
+  //表のラベルを置き換える
+  show figure.where(kind:table): set figure(supplement: "表")
+  //ソースコードのラベルを書き換える
+  show figure.where(kind: raw): set figure(supplement: "コード")
+  //その他の参照の設定
+  show ref: it => {
+    let eq = math.equation
+    let el = it.element
+    if el != none and el.func() == eq {
+      // 数式の参照を書き換える．
+      link(el.location())[
+        #set text(fill:text.fill)
+        #numbering(
+        el.numbering,
+        ..counter(eq).at(el.location())
+      )]
+    }
+    else if el != none and el.func() == footnote {
+      link(el.location())[
+        //footnoteの参照を書き換える
+        #set text(fill:text.fill)
+        脚注#numbering(el.numbering,..counter(footnote).at(el.location()))]
+    } else if el != none and el.func() == heading{
+      //headingの参照を書き換える.
+      link(el.location())[
+        #set text(fill:text.fill)
+        第#numbering(el.numbering,..counter(heading).at(el.location()))節]
+    } else {it}
+  }
 
   show: thmrules.with()
 
