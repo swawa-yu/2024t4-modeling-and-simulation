@@ -2,7 +2,7 @@
 #import "@preview/cetz:0.3.1"
 
 #show: paper.with(
-  paper-num: "2",
+  paper-num: "2-1",
   title: "ベクトルの内積と距離の性質について",
   date-due: "2025年1月8日",
 )
@@ -420,7 +420,7 @@ $
 #grid(columns:2, 
   [#figure(image("./fig/4.png"), caption:[2つのベクトルのプロット(30°, 60°)])<fig:4>],
   [#figure(image("./fig/5.png"), caption:[2つのベクトルのプロット(45°, 135°)])<fig:5>]
-)
+  )
 
 
 #figure(caption: [大きさが3, 角度が45°, 135° のベクトルプロット])[
