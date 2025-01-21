@@ -19,8 +19,7 @@
   date: (datetime.today().year(), datetime.today().month(), datetime.today().day()),
 ) = {
   set page(paper: "a4", margin: 12%)
-  // set par(leading: 1em, first-line-indent: 0em, justify: true)
-  set par(leading: 0.55em, first-line-indent: 0em, justify: true)
+  set par(leading: 0.65em, first-line-indent: 0em, justify: true, spacing: 1.3em)
   set text(
     font:(
       // "Times New Roman",
@@ -41,6 +40,8 @@
   show figure.where(kind:table): set figure(supplement: "表")
   //ソースコードのラベルを書き換える
   show figure.where(kind: raw): set figure(supplement: "コード")
+  // 注釈のラベル
+  show footnote: set footnote(numbering: "※1")
   //その他の参照の設定
   show ref: it => {
     let eq = math.equation
