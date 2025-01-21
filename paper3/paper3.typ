@@ -52,15 +52,16 @@ $
 $
 のように書く。また、$xx$ の成分をシステム、モデルに与えて得られるものについてもそれぞれ同様に、
 $
-  yy=mat(y_1; dots.v; y_n), hat(yy)=mat(a x_1+b; dots.v; a x_n+b)
+  yy=mat(y_1; dots.v; y_n), #h(1em) hat(yy)=mat(a x_1+b; dots.v; a x_n+b)
 $
 とおく。さらに、
 $
-  θθ=mat(a; b), X=mat(x_1, 1; dots.v, dots.v; x_n, 1)
+  X=mat(x_1, 1; dots.v, dots.v; x_n, 1), #h(1em) θθ=mat(a; b)
 $
 とおくと $n$ 個の関係式 $y_k = a x_k +b #h(1em) (k=1,...,n)$ を 
 $
-  hat(yy)=X θθ
+  hat(yy) &= X θθ\
+  mat(y_1; dots.v; y_n) &= mat(x_1, 1; dots.v, dots.v; x_n, 1) mat(a; b)
 $
 と表すことができる。誤差についても同様に $ee=hat(yy)-yy$ と直す。すると上の式はこの $ee$ を用いて次のように表せる。
 $
