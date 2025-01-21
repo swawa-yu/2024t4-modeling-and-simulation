@@ -162,40 +162,42 @@ $
 // $
 
 == 最小二乗法の幾何学的解釈
-次のように $n$ 次元空間の絵を書いてみる。3次元っぽい表現しかできないが、都合の良いことにこれで十分説明がつく。この絵は見やすさのために $xx, vb(1)$ がなす平面が「水平」になるように書いている。さて、ベクトル $xx, yy, vb(1), ee, hat(yy)$ の関係を見てみよう。
+次の @fig:1 ように $n$ 次元空間の絵を書いてみる。3次元っぽい表現しかできないが、都合の良いことにこれで十分説明がつく。この絵は見やすさのために $xx, vb(1)$ がなす平面が「水平」になるように書いている。さて、ベクトル $xx, yy, vb(1), ee, hat(yy)$ の関係を見てみよう。
 
-#let p_x = (x: -0.5, y: 0, z: 1)
-#let p_1 = (x: 2, y: 0, z: 0)
-#let p_0 = (x: 0, y: 0, z: 0)
-#let p_y = (x: 0.6, y: 1.5, z: 0.5)
-#let p_yh = (x: 1.7, y: 0, z: 0.7)
-#let p_yhs = (x: 0.6, y: 0, z: 0.5)
+#figure(caption: [$n$ 次元空間中の各ベクトル])[
+  #align(center,
+    cetz.canvas(length: 3cm, {
+      set-style(
+        mark: (fill: black, scale: 1, end: "stealth"),
+        stroke: (thickness: 0.4pt, cap: "round"),
+        content: (padding: 5pt)
+      )
 
-#align(center,
-  cetz.canvas(length: 3cm, {
-    set-style(
-      mark: (fill: black, scale: 1, end: "stealth"),
-      stroke: (thickness: 0.4pt, cap: "round"),
-      content: (padding: 5pt)
-    )
+      let p_x = (x: -0.5, y: 0, z: 1)
+      let p_1 = (x: 2, y: 0, z: 0)
+      let p_0 = (x: 0, y: 0, z: 0)
+      let p_y = (x: 0.6, y: 1.5, z: 0.5)
+      let p_yh = (x: 1.7, y: 0, z: 0.7)
+      let p_yhs = (x: 0.6, y: 0, z: 0.5)
 
-    line(p_0, p_x, name: "x")
-    line(p_0, p_y, name: "y",)
-    line(p_0, p_1, name: "one")
-    line(p_0, p_yh, name: "yhat")
-    line(p_0, p_yhs, name: "yhatstar")
-    line(p_y, p_yh, name: "e")
-    line(p_y, p_yhs, name: "estar")
+      line(p_0, p_x, name: "x")
+      line(p_0, p_y, name: "y",)
+      line(p_0, p_1, name: "one")
+      line(p_0, p_yh, name: "yhat")
+      line(p_0, p_yhs, name: "yhatstar")
+      line(p_y, p_yh, name: "e")
+      line(p_y, p_yhs, name: "estar")
 
-    content("x.end", $xx = mat(x_1; dots.v; x_n)$, anchor: "north-east")
-    content("y.end", $yy$, anchor: "south")
-    content("one.end", $mat(1; dots.v; 1)$, anchor: "west")
-    content("yhat.end", $hat(y) = X θθ$, anchor: "north")
-    content("yhatstar.end", $hat(y)_* = X θθ_*$, anchor: "north")
-    content("e.mid", $ee$, anchor: "west")
-    content("estar.mid", $ee_*$, anchor: "west")
-  })
+      content("x.end", $xx = mat(x_1; dots.v; x_n)$, anchor: "north-east")
+      content("y.end", $yy$, anchor: "south")
+      content("one.end", $mat(1; dots.v; 1)$, anchor: "west")
+      content("yhat.end", $hat(y) = X θθ$, anchor: "north")
+      content("yhatstar.end", $hat(y)_* = X θθ_*$, anchor: "north")
+      content("e.mid", $ee$, anchor: "west")
+      content("estar.mid", $ee_*$, anchor: "west")
+    })
 )
+]<fig:1>
 
 モデルから得られる $hat(yy)$ は $xx, vb(1)$ がなす平面上にある。$hat(yy) = a xx + b vb(1)$ と書けることから明らかである。$θθ = mat(a; b)$ が動けば、それに合わせて $hat(yy)$ はこの平面上を動く。
 
