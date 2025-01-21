@@ -34,15 +34,15 @@
   show link: underline
   show link: set text(fill: rgb("#125ee0"))
 
-  //図のラベルを置き換える
+  // 図のラベルを置き換える
   show figure.where(kind:image): set figure(supplement: "図")
-  //表のラベルを置き換える
+  // 表のラベルを置き換える
   show figure.where(kind:table): set figure(supplement: "表")
-  //ソースコードのラベルを書き換える
+  // ソースコードのラベルを書き換える
   show figure.where(kind: raw): set figure(supplement: "コード")
   // 注釈のラベル
   show footnote: set footnote(numbering: "※1")
-  //その他の参照の設定
+  // その他の参照の設定
   show ref: it => {
     let eq = math.equation
     let el = it.element
@@ -57,11 +57,11 @@
     }
     else if el != none and el.func() == footnote {
       link(el.location())[
-        //footnoteの参照を書き換える
+        // footnoteの参照を書き換える
         #set text(fill:text.fill)
         脚注#numbering(el.numbering,..counter(footnote).at(el.location()))]
     } else if el != none and el.func() == heading{
-      //headingの参照を書き換える.
+      // headingの参照を書き換える.
       link(el.location())[
         #set text(fill:text.fill)
         第#numbering(el.numbering,..counter(heading).at(el.location()))節]
