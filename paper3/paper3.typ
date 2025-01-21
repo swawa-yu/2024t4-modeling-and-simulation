@@ -183,18 +183,17 @@ $
     line(p_0, p_y, name: "y",)
     line(p_0, p_1, name: "one")
     line(p_0, p_yh, name: "yhat")
-    line(p_y, p_yh, name: "e")
     line(p_0, p_yhs, name: "yhatstar")
+    line(p_y, p_yh, name: "e")
     line(p_y, p_yhs, name: "estar")
 
     content("x.end", $xx = mat(x_1; dots.v; x_n)$, anchor: "north-east")
     content("y.end", $yy$, anchor: "south")
     content("one.end", $mat(1; dots.v; 1)$, anchor: "west")
-    content("e.mid", $ee$, anchor: "west")
     content("yhat.end", $hat(y) = X θθ$, anchor: "north")
-    content("estar.mid", $ee_*$, anchor: "west")
     content("yhatstar.end", $hat(y)_* = X θθ_*$, anchor: "north")
-
+    content("e.mid", $ee$, anchor: "west")
+    content("estar.mid", $ee_*$, anchor: "west")
   })
 )
 
