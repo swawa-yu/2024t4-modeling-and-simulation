@@ -150,12 +150,12 @@ $
   J(θθ) &= ||X (θθ-θθ_*)||^2 + ||yy||^2 - ||X θθ_*||^2\
         &= ||hat(yy) - hat(yy)_*||^2 + ||yy||^2 - ||hat(yy)_*||^2
 $
-$J(θθ)$ は $θθ = θθ_*$ で最小になる。そのとき、はじめの項が消えるということなので
+$J(θθ)$ は $θθ = θθ_*$ のとき最小となるが、このとき右辺の第1項が $0$ となるので改めて式を書くと
 $
-  J(θθ_*) = ||ee||^2 &= ||yy||^2 - ||X θθ_*||^2\
+  J(θθ_*) = ||ee_*||^2 &= ||yy||^2 - ||X θθ_*||^2\
                      &= ||yy||^2 - ||hat(yy)_*||^2
 $
-三平方の定理の逆から、$yy, hat(yy)_*, ee$ は直角三角形をなすと言える。
+のようになる。三平方の定理の逆から、$yy, hat(yy)_*, ee_*$ は直角三角形をなすと言える。
 // $
 //   J(θθ) = ||ee||^2 &= ||hat(yy) - yy||^2\
 //                        &= ||hat(yy)||^2 + ||yy||^2 - 2hat(yy)^⊤ yy\
@@ -234,7 +234,7 @@ $
       content("yhatstar.end", $hat(y)_* = X θθ_*$, anchor: "north")
       content("e.mid", $ee$, anchor: "west")
       content("estar.mid", $ee_*$, anchor: "west")
-      content(add(p_x_, p_1_), text(fill: gray)[$Col(X)$], anchor: "south-east")
+      content(add(p_x_, p_1_), text(fill: gray)[$xx, oone$ がなす平面 $Col(X)$], anchor: "south-east")
     })
 )
 ]<fig:1>
