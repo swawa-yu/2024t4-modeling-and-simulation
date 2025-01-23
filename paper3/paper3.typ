@@ -137,6 +137,7 @@ $
           &= (X θθ)^⊤(X θθ) - 2θθ^⊤ X^⊤ X θθ_* + yy^⊤ yy #h(4em) (∵X^⊤X θθ_* = X^⊤ yy)\
           &= (X θθ)^⊤(X θθ) - 2(X θθ)^⊤ (X θθ_*) + yy^⊤ yy\
           &= {(X θθ)^⊤(X θθ) - 2(X θθ)^⊤ (X θθ_*) + (X θθ_*)^⊤(X θθ_*)} + yy^⊤ yy - (X θθ_*)^⊤(X θθ_*)\
+          &= (X θθ- X θθ_*)^⊤ (X θθ- X θθ_*) + yy^⊤ yy - (X θθ_*)^⊤(X θθ_*)\
           &= (X (θθ-θθ_*))^⊤ (X (θθ-θθ_*)) + yy^⊤ yy - (X θθ_*)^⊤(X θθ_*)\
           &= (θθ-θθ_*)^⊤ X^⊤ X (θθ-θθ_*) + yy^⊤ yy - θθ_*^⊤ X^⊤ X θθ_*\
           &= (θθ-θθ_*)^⊤ X^⊤ X (θθ-θθ_*) + yy^⊤ yy - (θθ_*^⊤)(X^⊤ X θθ_*)\
@@ -144,12 +145,12 @@ $
           &= (θθ-θθ_*)^⊤ X^⊤ X (θθ-θθ_*) + yy^⊤ yy - yy^⊤ X (X^⊤ X)^(-1)X^⊤ yy
   $
 ]
-この等式を自分の思うきれいな形で書くと
+この等式を自分の思うきれいな形で書くと次のような感じだろうか。
 $
   J(θθ) &= ||X (θθ-θθ_*)||^2 + ||yy||^2 - ||X θθ_*||^2\
         &= ||hat(yy) - hat(yy)_*||^2 + ||yy||^2 - ||hat(yy)_*||^2
 $
-となる。$J(θθ)$ は $θθ = θθ_*$ で最小になる。そのとき、はじめの項が消えるということなので
+$J(θθ)$ は $θθ = θθ_*$ で最小になる。そのとき、はじめの項が消えるということなので
 $
   J(θθ_*) = ||ee||^2 &= ||yy||^2 - ||X θθ_*||^2\
                      &= ||yy||^2 - ||hat(yy)_*||^2
@@ -167,7 +168,7 @@ $
 
 #figure(caption: [$n$ 次元空間中の各ベクトル])[
   #align(center,
-    cetz.canvas(length: 3cm, {
+    cetz.canvas(length: 2.5cm, {
       set-style(
         mark: (fill: black, scale: 1, end: "stealth"),
         stroke: (thickness: 0.4pt, cap: "round"),
@@ -177,25 +178,63 @@ $
       let p_x = (x: -0.5, y: 0, z: 1)
       let p_1 = (x: 2, y: 0, z: 0)
       let p_0 = (x: 0, y: 0, z: 0)
-      let p_y = (x: 0.6, y: 1.5, z: 0.5)
+      let p_y = (x: 0.6, y: 1.2, z: 0.5)
       let p_yh = (x: 1.7, y: 0, z: 0.7)
       let p_yhs = (x: 0.6, y: 0, z: 0.5)
+      let resize(p, scale) = {
+        let norm = calc.pow((p.x*p.x + p.y*p.y + p.z*p.z), 0.5)
+        let a = scale / norm
+        return (x: p.x * a, y: p.y * a, z: p.z * a)
+      }
+      let add(p1, p2) = (x: p1.x + p2.x, y: p1.y + p2.y, z: p1.z + p2.z)
+      let sub(p1, p2) = (x: p1.x - p2.x, y: p1.y - p2.y, z: p1.z - p2.z)
+      let mul(p, a) = (x: p.x * a, y: p.y * a, z: p.z * a)
+      let vecline(p, v) = line(p, add(p, v))
 
       line(p_0, p_x, name: "x")
-      line(p_0, p_y, name: "y",)
+      line(p_0, p_y, name: "y")
       line(p_0, p_1, name: "one")
       line(p_0, p_yh, name: "yhat")
       line(p_0, p_yhs, name: "yhatstar")
       line(p_y, p_yh, name: "e")
       line(p_y, p_yhs, name: "estar")
 
-      content("x.end", $xx = mat(x_1; dots.v; x_n)$, anchor: "north-east")
+      set-style(mark: (end: none))
+      // 直角記号
+      let rightangle(p1, p2, p3, size) = {
+        let v21 = sub(p2, p1)
+        let v23 = sub(p2, p3)
+        let v21_ = resize(v21, size)
+        let v23_ = resize(v23, size)
+        let p1_21 = sub(p2, resize(v21, size))
+        let p3_23 = sub(p2, resize(v23, size))
+        line(p1_21, sub(p1_21, v23_))
+        line(p3_23, sub(p3_23, v21_))
+      }
+
+      rightangle(p_0, p_yhs, p_y, 0.1)
+      rightangle(add(p_yhs, p_1), p_yhs, p_y, 0.1)
+      rightangle(add(p_yhs, p_x), p_yhs, p_y, 0.1)
+
+        let p_x_ = mul((x: -p_x.x, y: -p_x.y, z: -p_x.z), 0.6)
+        let p_1_ = mul((x: -p_1.x, y: -p_1.y, z: -p_1.z), 0.6)
+      merge-path(fill: color.rgb("00000010"), stroke: none, {
+        let p_x = mul(p_x, 1.4)
+        let p_1 = mul(p_1, 1.4)
+        line(add(p_x, p_1_), add(p_x, p_1))
+        line(add(p_x, p_1), add(p_x_, p_1))
+        line(add(p_x_, p_1), add(p_x_, p_1_))
+        line(add(p_x_, p_1_), add(p_x, p_1_))
+      })
+
+      content("x.end", $xx = mat(x_1; dots.v; x_n)$, anchor: "east")
       content("y.end", $yy$, anchor: "south")
       content("one.end", $mat(1; dots.v; 1)$, anchor: "west")
       content("yhat.end", $hat(y) = X θθ$, anchor: "north")
       content("yhatstar.end", $hat(y)_* = X θθ_*$, anchor: "north")
       content("e.mid", $ee$, anchor: "west")
       content("estar.mid", $ee_*$, anchor: "west")
+      content(add(p_x_, p_1_), text(fill: gray)[$Col(X)$], anchor: "south-east")
     })
 )
 ]<fig:1>
