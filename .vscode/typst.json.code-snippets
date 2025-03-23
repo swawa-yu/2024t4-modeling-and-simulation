@@ -1,0 +1,13 @@
+{
+	"figure-column": {
+		"prefix": "figcol",
+		"body": "#grid(columns:2, \n  [#figure(image(\"./fig/1.png\"), caption:[ベクトルのプロット(バツ印なし)])<fig:1>],\n  [#figure(image(\"./fig/2.png\"), caption:[ベクトルのプロット(バツ印あり)])<fig:2>]\n)",
+		"description": "図を横に並べる"
+	},
+	"snippetName": {
+		"scope": "scope",
+		"prefix": "prefix",
+		"body": "snippet",
+		"description": "description"
+	}
+}

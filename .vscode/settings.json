@@ -1,5 +1,6 @@
 {
     "editor.quickSuggestions": {
-        "other": "off"
-    }
+        // "other": "off"
+    },
+    "editor.unicodeHighlight.ambiguousCharacters": false
 }
